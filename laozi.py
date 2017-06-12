@@ -62,9 +62,9 @@ def main():
     # Check the Delete folder first
     delete_file(deletePath)
 
-    input("Pause before kinesis runs...")
+    input("Pause before move_file runs...")
     # Check the Holding folder next
-    kinesis(holdingPath)
+    move_file(holdingPath)
 
 
 def delete_file(delpath):
@@ -94,7 +94,7 @@ def delete_file(delpath):
                 shutil.rmtree(curpath)
 
 
-def kinesis(path):
+def move_file(path):
     """Move files to the deletePath for the delete_file function."""
     # >>>[[[MAKE THE FUNCTION CHECK FOR ZIP EXTENSION!!]]]<<<
     # cutoff = datetime.timedelta(days=30)
