@@ -127,6 +127,7 @@ def archive_file(path):
     """Create the zip archive for the path it is given."""
     # cutoff = datetime.timedelta(seconds=30)
 
+    print(archive)
     for name in os.listdir(path):
 
         if not os.path.isdir(os.path.join(path, name)):
