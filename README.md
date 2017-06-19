@@ -12,7 +12,7 @@ The script looks for 3 folders within a user-specified path. They can be named w
 
 * Archive - Holds the .ZIP (for now, the only available archive format I have implemented) file(s).
 
-* Holding - This is kind of the "working" folder. Items in the holding folder have not been touched by the script yet. When the script runs, it will check the files to see if they are older than the user-specified time (default 30 days *(currently 30 seconds, will fix in a later release)*). If the files are older than the specified time, they will be archived into a .ZIP file and moved to , and the original file/folder will be moved to the "Delete" folder, to be deleted on the next run.
+* Holding - This is kind of the "working" folder. Items in the holding folder have not been touched by the script yet. When the script runs, it will check the files to see if they are older than the user-specified time (default 30 days *(currently 30 seconds, will fix in a later release)*). If the files are older than the specified time, they will be archived into a .ZIP file and moved to the Archive folder, and the original file/folder will be moved to the "Delete" folder, to be deleted on the next run.
 
 * Delete - One of the most aptly named things I have ever created, the Delete folder holds files moved from Holding, and each pass of the script will delete anything older than a specified period of time.
 
