@@ -99,41 +99,47 @@ def move_file(path):
     # >>>[[[MAKE THE FUNCTION CHECK FOR ZIP EXTENSION!!]]]<<<
     # cutoff = datetime.timedelta(days=30)
     cutoff = datetime.timedelta(seconds=30)
+    archivefile = "archive" or "Archive"
+    movefile = "Move" or "move"
+    deletefile = "Delete" or "delete"
 
     for dirpath, dirnames, filenames in os.walk(path):
 
         for file in filenames:
+            if (archivefile or movefile or deletefile) not in filenames:
+                curpath = os.path.join(dirpath, file)
+                file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(
+                    curpath))
 
-            curpath = os.path.join(dirpath, file)
-            file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(
-                curpath))
-
-            if datetime.datetime.now() - file_modified > cutoff:
-                copy_tree(path, deletePath)
-                delete_file(path)
+                if datetime.datetime.now() - file_modified > cutoff:
+                    copy_tree(path, deletePath)
+                    delete_file(path)
 
         for dir in dirnames:
+            if (archivefile or movefile or deletefile) not in dirnames:
+                curpath = os.path.join(dirpath, dir)
+                file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(
+                    curpath))
 
-            curpath = os.path.join(dirpath, dir)
-            file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(
-                curpath))
-
-            if datetime.datetime.now() - file_modified > cutoff:
-                full_path = os.path.join(path, dir)
-                shutil.move(full_path, deletePath)
+                if datetime.datetime.now() - file_modified > cutoff:
+                    full_path = os.path.join(path, dir)
+                    print(full_path)
+                    shutil.move(full_path, deletePath)
 
 
 def archive_file(path):
     """Create the zip archive for the path it is given."""
     # cutoff = datetime.timedelta(seconds=30)
 
-    print(archive)
     for name in os.listdir(path):
 
         if not os.path.isdir(os.path.join(path, name)):
             continue
 
         archive = os.path.join(path, name) + ".zip"
+        print(archive)
+        cwd = os.getcwd()
+        print(cwd)
 
         with zipfile.ZipFile(archive, 'w') as zip:
             full_path = os.path.join(path, name)
