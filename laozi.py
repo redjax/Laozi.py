@@ -51,6 +51,10 @@ holdingPath = servPath + sys.argv[1]
 deletePath = servPath + sys.argv[2]
 archivePath = servPath + sys.argv[3]
 
+print("Holding: " + holdingPath)
+print("Delete: " + deletePath)
+print("Archive: " + archivePath)
+
 
 def main():
     """The main function that will run other functions with the input path."""
@@ -58,11 +62,11 @@ def main():
     archive_file(holdingPath)
     # makeZip(holdingPath)
 
-    input("Pause before delete_file runs...")
+    input("Pause before delete_file runs..." + deletePath)
     # Check the Delete folder first
     delete_file(deletePath)
 
-    input("Pause before move_file runs...")
+    input("Pause before move_file runs..." + holdingPath)
     # Check the Holding folder next
     move_file(holdingPath)
 
@@ -77,6 +81,7 @@ def delete_file(delpath):
     for dirpath, dirnames, filenames in os.walk(delpath):
 
         for file in filenames:
+            print("Del Path: " + delpath)
             curpath = os.path.join(dirpath, file)
             file_modified = datetime.datetime.fromtimestamp(
                 os.path.getmtime(curpath))
@@ -85,7 +90,7 @@ def delete_file(delpath):
                 os.remove(curpath)
 
         for dir in dirnames:
-
+            print("Del Path: " + delpath)
             curpath = os.path.join(dirpath, dir)
             file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(
                 curpath))
@@ -104,6 +109,7 @@ def move_file(path):
     deletefile = "Delete" or "delete"
 
     for dirpath, dirnames, filenames in os.walk(path):
+        print("Folder Path: " + path)
 
         for file in filenames:
             if (archivefile or movefile or deletefile) not in filenames:
@@ -116,6 +122,7 @@ def move_file(path):
                     delete_file(path)
 
         for dir in dirnames:
+            print("Dir Path: " + path)
             if (archivefile or movefile or deletefile) not in dirnames:
                 curpath = os.path.join(dirpath, dir)
                 file_modified = datetime.datetime.fromtimestamp(os.path.getmtime(
@@ -137,9 +144,9 @@ def archive_file(path):
             continue
 
         archive = os.path.join(path, name) + ".zip"
-        print(archive)
+        print("Archive path:" + archive)  # This path is correct
         cwd = os.getcwd()
-        print(cwd)
+        print("Current working dircetory:" + cwd)  # This path is the problem.
 
         with zipfile.ZipFile(archive, 'w') as zip:
             full_path = os.path.join(path, name)
