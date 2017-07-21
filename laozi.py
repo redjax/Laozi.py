@@ -14,9 +14,6 @@ The general flow for backups should be this:
 
 Script is a work in progress.
 """
-
-# import time
-# import zlib
 import datetime
 import os
 import shutil
@@ -146,7 +143,7 @@ def archive_file(path):
         archive = os.path.join(path, name) + ".zip"
         print("Archive path:" + archive)  # This path is correct
         cwd = os.getcwd()
-        print("Current working dircetory:" + cwd)  # This path is the problem.
+        print("Current working directory:" + cwd)  # This path is the problem.
 
         with zipfile.ZipFile(archive, 'w') as zip:
             full_path = os.path.join(path, name)
