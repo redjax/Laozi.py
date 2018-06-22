@@ -1,11 +1,11 @@
-# import os
-import zipfile
+import os
+# import zipfile
 import subprocess
 
-archpath = '\\\metrolx01\\backup\\jxk5224\\_tmp\\laozi\\test\\'
+archpath = '\\\metrolx01\\backup\\jxk5224\\_tmp\\laozi-review\\test\\'
 archname = 'test.zip'
 fullpath = archpath + archname
-testzip = zipfile.ZipFile(fullpath, 'w')
+# testzip = zipfile.ZipFile(fullpath, 'w')
 portazip = '7-Zip\\7z.exe'
 
 
