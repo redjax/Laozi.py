@@ -1,14 +1,22 @@
 import os
 import zipfile
+import jsonops
 
-archpath = '\\\metrolx01\\backup\\jxk5224\\_tmp\\laozi\\test\\'
-archname = 'test.zip'
-fullpath = archpath + archname
-testzip = zipfile.ZipFile(fullpath, 'w')
 
-for folder, subfolders, files in os.walk(archpath):
+def createZip():
+    jsonops.readjson('args.json')
 
-    for file in files:
-        testzip.write(os.path.join(folder, file), os.path.relpath(os.path.join(folder, file), archpath), compress_type=zipfile.ZIP_DEFLATED)
+    archpath = (jsonops.getarg('args.json', 'metrolx')
+                + jsonops.getarg('args.json', 'backupfolder'))
+    archname = 'test.zip'
+    fullpath = archpath + archname
+    testzip = zipfile.ZipFile(fullpath, 'w')
 
-testzip.close()
+    for folder, subfolders, files in os.walk(archpath):
+
+        for file in files:
+            testzip.write(os.path.join(folder, file), os.path.relpath(
+                            os.path.join(folder, file),
+                            archpath), compress_type=zipfile.ZIP_DEFLATED)
+
+    testzip.close
