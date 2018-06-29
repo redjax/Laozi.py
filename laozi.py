@@ -1,6 +1,4 @@
-"""
-
-This script will keep the archive folder cleaned up.
+"""This script will keep the archive folder cleaned up.
 
 The general flow for backups should be this:
 
@@ -15,8 +13,6 @@ The general flow for backups should be this:
 Script is a work in progress.
 """
 
-# import time
-# import zlib
 import datetime
 import os
 import shutil
@@ -24,14 +20,13 @@ import zipfile
 from distutils.dir_util import copy_tree
 import sys
 
-"""
-For use without argv
+
+# For use without argv
 
 servPath = "[ENTER SERVER PATH HERE]"
 holdingPath = servPath + "[ENTER HOLDING FOLDER PATH HERE]"
 deletePath = servPath + "[ENTER DELETE FOLDER PATH HERE]"
 archivePath = servPath + "[ENTER ARCHIVE FOLDER PATH HERE]"
-"""
 
 """
 The terminology here may be a bit confusing. The servPath is essentially the
@@ -40,13 +35,14 @@ holding, delete, and archive paths. Even if you are not using this on a server,
 you still need to give the script a location to clean.
 
 I am thinking of changing this functionality to be more flexible, but for now,
-the script looks for a folder that contains the "holding," "delete," and
-"archive" paths.
+the script looks for a folder that contains the 'holding,' 'delete,' and
+'archive' paths.
 
 TL;DR: put your path (local or remote) that has the 3 folders in it in
 "servPath," and then pass the other folders as arguments to the script.
 """
-servPath = ""  # Put the path with holding, delete, & archive here.
+
+servPath = "Z:\\_tmp\\laozi\\"  # Path with holding, delete, & archive.
 holdingPath = servPath + sys.argv[1]
 deletePath = servPath + sys.argv[2]
 archivePath = servPath + sys.argv[3]
@@ -146,11 +142,16 @@ def archive_file(path):
         archive = os.path.join(path, name) + ".zip"
         print("Archive path:" + archive)  # This path is correct
         cwd = os.getcwd()
-        print("Current working dircetory:" + cwd)  # This path is the problem.
+        print("Current working directory:" + cwd)  # This path is the problem.
 
-        with zipfile.ZipFile(archive, 'w') as zip:
-            full_path = os.path.join(path, name)
-            zip.write(full_path, name)
+        # with zipfile.ZipFile(archive, 'w') as zip:
+        full_path = os.path.join(path, name)
+        # zip.write(full_path, name)
+
+        for folder, subfolders, files in os.walk(full_path):
+            for file in files:
+                zipfile.ZipFile(full_path).write(os.path.join(folder, file), os.path.relpath(os.path.join(folder, file), archivePath), compress_type=zipfile.ZIP_DEFLATED)
+                zipfile.ZipFile(full_path).close()
 
 
 main()
